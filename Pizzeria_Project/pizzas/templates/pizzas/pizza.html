@@ -1,5 +1,5 @@
 {% extends "pizzas/base.html" %}
-
+{% load bootstrap4 %}
 
 {% block content %}
 
@@ -19,5 +19,19 @@
 </ul>
 
 <p> <a href="{% url 'pizzas:new_topping' pizza.id %}">Add a new Topping</a> </p>
+
+<ul>
+    {% for comment in comments %}
+    <li>
+        <p>{{comment.name | linebreaks}}</p>
+    </li>
+    {% empty %}
+    <li>There are no comments for this Pizza</li>
+    {% endfor %}
+</ul>
+<p>
+    <a href="{% url 'pizzas:comments' pizza.id %}">Add a comment to this Pizza</a>
+
+</p>
 
 {% endblock content %}

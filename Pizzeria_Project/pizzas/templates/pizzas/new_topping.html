@@ -1,5 +1,6 @@
 {% extends "pizzas/base.html" %}
-
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <p> <a href="{% url 'pizzas:pizza' pizza.id %}">{{ pizza }}</a> </p>
@@ -13,7 +14,7 @@
     {% csrf_token %}
     {{ form.as_p }}
 
-    <button name="submit">Add Topping</button>
+    <button name="submit" class="btn btn-outline-primary">Add Topping</button>
 </form>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Pizza, Topping
+from .models import Pizza, Topping, Comment
 
 class PizzaForm(forms.ModelForm):
     class Meta:
@@ -12,3 +12,12 @@ class ToppingForm(forms.ModelForm):
         model = Topping
         fields = ['name']
         labels = {'Name': ''}
+
+#Might not use
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name']
+        labels = {'Name': ''}
+
+

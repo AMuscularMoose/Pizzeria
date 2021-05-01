@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Pizza, Topping
-from .forms import PizzaForm, ToppingForm
+from .models import Pizza, Topping, Comment
+from .forms import PizzaForm, ToppingForm, CommentForm
 from django.http import Http404
 # Create your views here.
 
@@ -71,3 +71,31 @@ def edit_topping(request,topping_id):
             return redirect('pizzas:pizza',pizza_id=pizza.id)
     context = {'topping':topping, 'pizza':pizza, 'form':form}
     return render(request, 'pizzas/edit_topping.html', context)
+
+@login_required
+def comments(request, pizza_id):
+    pizza = Pizza.objects.get(id=pizza_id)
+    comments = Comment.object.filter(id=pizza_id)
+    if request.method != 'POST':
+        form = CommentForm()
+    else:
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comments = form.save(commit=False)
+            comments.pizza = pizza
+            comments.owner = request.user
+            comments.save()
+            return redirect('pizzas:pizza',pizza_id=pizza_id)
+    context = {'pizza':pizza, 'comments':comments}
+    return render(request, 'pizzas/comments.html', context) 
+
+    '''
+    if request.method == 'POST' and request.POST.get("btn1"):
+        comment = request.POST.get("comment")
+        Comment.objects.create(pizza_id=pizza_id,name=comment,date_added=date.today())
+    comments = Comment.object.filter(pizza=pizza_id)
+    pizza = Pizza.objects.get(id=pizza_id)
+
+    context = {'pizza':pizza, 'comments':comments}
+    return render(request, 'pizzas/comments.html', context)
+    '''
