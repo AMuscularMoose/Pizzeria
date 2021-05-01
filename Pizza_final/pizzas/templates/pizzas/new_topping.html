@@ -1,0 +1,19 @@
+{% extends "pizzas/base.html" %}
+
+
+{% block content %}
+<p> <a href="{% url 'pizzas:pizza' pizza.id %}">{{ pizza }}</a> </p>
+
+<!--pizza.id is used here instead of pizza_id because we are referring to the ATTRIBUTE (id) OF THE OBJECT (pizza), not the variable associated with pizza used in views-->
+
+<p> Add a new topping: </p>
+
+<form action="{% url 'pizzas:new_topping' pizza.id %}" method='post'>
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button name="submit">Add Topping</button>
+</form>
+
+{% endblock content %}

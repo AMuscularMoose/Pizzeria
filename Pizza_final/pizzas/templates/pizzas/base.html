@@ -1,0 +1,23 @@
+<p>
+    <a href="{% url 'pizzas:index' %}">Justin's Pizzeria Home</a>
+    <li class="nav item">
+        <a class="nav-link" href="{% url 'pizzas:pizzas' %}">Pizzas</a>
+    </li>
+
+    {% if user.is_authenticated %}
+    Hello, {{user.username}}.
+    <li class="nav item">
+        <a class="nav-link" href="{% url 'users:logout' %}">Log Out</a>
+    </li>
+    {% else %}
+    <li class="nav item">
+        <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+    </li>
+    <li class="nav item">
+        <a class="nav-link" href="{% url 'users:login' %}">Log In</a>
+    </li>
+    {% endif %}
+
+</p>
+
+{% block content %}{% endblock content %}
